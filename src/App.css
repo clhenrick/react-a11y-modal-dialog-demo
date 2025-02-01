@@ -1,0 +1,19 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.dialog-contents {
+  display: flex;
+  flex-direction: column;
+  max-width: 85ch;
+  max-height: 75vh;
+  padding: 24px;
+}
+
+div:has(button) {
+  display: flex;
+  gap: 16px;
+}
