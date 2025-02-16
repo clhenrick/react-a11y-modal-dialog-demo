@@ -31,6 +31,10 @@ function App() {
     dialogRef.current?.close();
   };
 
+  const onClose = () => {
+    console.log("closed!");
+  };
+
   return (
     <main>
       <h1>Accessible React Modal Dialog Demo</h1>
@@ -52,12 +56,13 @@ function App() {
         setIsOpen={setIsOpen}
         aria-labelledby={nameIdControlled}
         aria-describedby={descIdControlled}
+        onClose={onClose}
       >
         <div className="dialog-contents">
           <h2 id={nameIdControlled}>An Appropriate Title Might Go Here</h2>
           <p id={descIdControlled}>
             Here's where you might add a description to further justify my
-            existance.
+            existence.
           </p>
           <button onClick={closeControlled}>Close Me</button>
         </div>
