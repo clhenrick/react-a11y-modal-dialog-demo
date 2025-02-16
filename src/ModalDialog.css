@@ -7,8 +7,6 @@ dialog {
   padding: 0;
 }
 
-/* NOTE: we use animation and keyframes here instead of transition because it is less complex and currently has better cross-browser support for animating the dialog element.
-For more See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#animating_dialogs */
 @media (prefers-reduced-motion: no-preference) {
   dialog {
     opacity: 0;
