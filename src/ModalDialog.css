@@ -25,17 +25,20 @@ dialog {
   }
 }
 
+dialog::backdrop {
+  background-color: var(--backdrop-bg-color-closed);
+}
+
+dialog[open]::backdrop {
+  background-color: var(--backdrop-bg-color-open);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   dialog::backdrop {
-    background-color: var(--backdrop-bg-color-closed);
     transition:
       display var(--animation-duration) allow-discrete,
       overlay var(--animation-duration) allow-discrete,
       background-color var(--animation-duration);
-  }
-
-  dialog[open]::backdrop {
-    background-color: var(--backdrop-bg-color-open);
   }
 }
 
