@@ -1,12 +1,12 @@
 import {
   type AriaAttributes,
   type PropsWithChildren,
+  type SyntheticEvent,
   forwardRef,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
-  type SyntheticEvent,
 } from "react";
 import { assert } from "./utils";
 import "./ModalDialog.css";
@@ -47,18 +47,18 @@ export interface ModalDialogRef
     "addEventListener" | "removeEventListener" | "close" | "showModal"
   > {
   /** is the dialog's open property set to true
-   * Intentionally makes the dialog's `open` property read-only. We DO NOT want to set the `open` attribute/property using JSX or JavaScript as it can break the modal functionality. */
+   * Intentionally makes the dialog's `open` property read-only. We DO NOT want to set the `open` attribute/property using JSX or JavaScript as it will break the modal functionality. */
   isOpen: () => boolean;
 }
 
-/** prevents calling dialog.showModal() when it is already visible */
+/** prevents calling dialog.showModal() when it is already visible, as doing so will throw an error */
 function safelyOpenDialogAsModal(dialog: HTMLDialogElement | null) {
   if (dialog && !dialog.open) {
     dialog.showModal();
   }
 }
 
-/** An Accessible Modal Dialog */
+/** An accessible _modal dialog_ that utilizes the HTML <dialog> element */
 export const ModalDialog = forwardRef<ModalDialogRef, ModalDialogProps>(
   function (
     {
@@ -72,13 +72,13 @@ export const ModalDialog = forwardRef<ModalDialogRef, ModalDialogProps>(
     },
     forwardedRef,
   ) {
-    // assert that the ModalDialog has an accessible name via either the aria-labelledby (preferred) or aria-label (fallback) ARIA attribute
-    assert(
-      !(!props["aria-label"] && !props["aria-labelledby"]),
-      `The <${ModalDialog.displayName} /> component must have either "aria-labelledby" or "aria-label".
-			Either pass "aria-labelledby" the ID attribute value of a heading that describes the modal's content,
-			or pass "aria-label" with a short description of the modal's purpose.`,
-    );
+    if (process.env.NODE_ENV !== "production") {
+      // assert that the ModalDialog has an accessible name via either the aria-labelledby (preferred) or aria-label (fallback) ARIA attribute
+      assert(
+        !(!props["aria-label"] && !props["aria-labelledby"]),
+        'The <ModalDialog /> component must have an accessible name! Either pass "aria-labelledby" the ID attribute value of a heading that describes the Modal\'s content, or pass "aria-label" with a short description of the Modal\'s purpose.',
+      );
+    }
 
     const [uncontrolledOpen, setUncontrolledOpen] = useState(initialOpen);
     const dialogRef = useRef<HTMLDialogElement>(null);
