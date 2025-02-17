@@ -72,7 +72,7 @@ export const ModalDialog = forwardRef<ModalDialogRef, ModalDialogProps>(
     },
     forwardedRef,
   ) {
-    if (process.env.NODE_ENV !== "production") {
+    if (import.meta.env.DEV) {
       // assert that the ModalDialog has an accessible name via either the aria-labelledby (preferred) or aria-label (fallback) ARIA attribute
       assert(
         !(!props["aria-label"] && !props["aria-labelledby"]),
